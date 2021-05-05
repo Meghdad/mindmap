@@ -45,7 +45,7 @@ npm install @hellowuxin/mindmap
 | updateNodeName | data, id  | 更新节点名称时，传入节点数据和节点id |
 | click          | data, id  | 点击节点时，传入节点数据和节点id    |
 
-## 样例
+## Example
 
 ```html
 <template>
