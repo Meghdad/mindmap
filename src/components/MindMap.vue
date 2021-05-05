@@ -149,9 +149,9 @@ export default class MindMap extends Vue {
   mouse = { x0: 0, y0: 0, x1: 0, y1: 0 }
   contextMenuTarget!: Mdata | Mdata[]
   contextMenuItems = [
-    { title: '删除节点', name: 'delete', disabled: false },
-    { title: '折叠节点', name: 'collapse', disabled: false },
-    { title: '展开节点', name: 'expand', disabled: false },
+    { title: 'Delete', name: 'delete', disabled: false },
+    { title: 'Collapse', name: 'collapse', disabled: false },
+    { title: 'Expand', name: 'expand', disabled: false },
   ]
   optionList = [
     { title: 'JSON', icon: 'code-json', tip: '创建一个JSON格式的文本文件', color: 'purpleOpt' },
