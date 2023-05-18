@@ -66,8 +66,8 @@
           <div class="optionTip">{{ optionTip }}</div>
           <div class="action">
             <div class="spacer"></div>
-            <button class="cancel" @click="showPopUps=false">取消</button>
-            <button @click="exportTo(); showPopUps=false">导出</button>
+            <button class="cancel" @click="showPopUps=false">Cancel</button>
+            <button @click="exportTo(); showPopUps=false">Export</button>
           </div>
         </div>
       </div>
@@ -83,7 +83,7 @@ import ImData from '../ts/ImData'
 import History from '../ts/History'
 import toMarkdown from '../ts/toMarkdown'
 
-let mmdata: ImData // 思维导图数据
+let mmdata: ImData // mind map data
 @Component
 export default class MindMap extends Vue {
   @Prop() width: number | undefined
@@ -134,16 +134,16 @@ export default class MindMap extends Vue {
   multiSeleFlag = false
   minTextWidth = 16
   minTextHeight = 21
-  gBtnSide = 24 // gBtn边长
+  gBtnSide = 24 // gBtn side length
   foreignBorderWidth = 3
   spaceKey = false
-  toRecord = true // 判断是否需要记录mmdata的数据快照
-  toUpdate = true // 判断是否需要更新mmdata
-  dTop!: FlexNode // mmdata中纵坐标最高的数据
-  root!: FlexNode // 包含位置信息的mmdata
+  toRecord = true // Determine whether to record the data snapshot of mmdata
+  toUpdate = true // Determine whether to update mmdata
+  dTop!: FlexNode // The data with the highest vertical coordinate in mmdata
+  root!: FlexNode // mmdata containing location information
   showContextMenu = false
   showPopUps = false
-  showSelectedBox = false // 选中框
+  showSelectedBox = false // check box
   contextMenuX = 0
   contextMenuY = 0
   mouse = { x0: 0, y0: 0, x1: 0, y1: 0 }
@@ -200,7 +200,7 @@ export default class MindMap extends Vue {
       bottom: bottom - viewTop,
     }
   }
-  updateMmdata(val?: Mdata | null) { // 不可变数据
+  updateMmdata(val?: Mdata | null) { // immutable data
     if (val) { mmdata.data = JSON.parse(JSON.stringify(val)) }
     if (this.toRecord) {
       this.history.record(JSON.parse(JSON.stringify(mmdata.data)))
@@ -210,28 +210,28 @@ export default class MindMap extends Vue {
     this.$emit('change', [mmdata.getSource()])
   }
   init() {
-    // 绑定元素
+    // bind element
     this.mindmapSvg = d3.select(this.$refs.svg)
     this.mindmapG = d3.select(this.$refs.content)
     this.mindmapG.style('opacity', 0)
     this.dummy = d3.select(this.$refs.dummy)
-    // 绑定svg事件
+    // bind svg event
     this.makeKeyboard(this.keyboard)
     this.mindmapSvg.on('contextmenu', () => { d3.event.preventDefault() })
     this.mindmapSvgZoom = this.zoom.on('zoom', () => { this.mindmapG.attr('transform', d3.event.transform) })
       .filter(() => (
         (d3.event.ctrlKey && d3.event.type !== 'mousedown')
         || (this.spaceKey && d3.event.type !== 'wheel')
-      ) && !d3.event.button) // 开启双指捏合 空格键+左键可拖移
-      .scaleExtent([0.1, 8]) // 缩放倍数: 0.1～8
+      ) && !d3.event.button) // Enable two-finger pinch, spacebar + left button to drag
+      .scaleExtent([0.1, 8]) // Zoom factor: 0.1～8
     this.makeZoom(this.zoomable)
   }
-  initNodeEvent() { // 绑定节点事件
+  initNodeEvent() { // Binding node events
     this.makeDrag(this.draggable)
     this.makeNodeAdd(this.showNodeAdd)
     this.makeContextMenu(this.contextMenu)
   }
-  // 事件
+  // event
   makeKeyboard(val: boolean) {
     val ? this.mindmapSvg.on('keydown', this.svgKeyDown).on('keyup', this.svgKeyUp)
       : this.mindmapSvg.on('keydown', null).on('keyup', null)
