@@ -1,8 +1,8 @@
 {
-  "name": "@hellowuxin/mindmap",
+  "name": "@meghdad/mindmap",
   "version": "2.1.5",
   "description": "Mindmap Vue Component",
-  "author": "伍鑫",
+  "author": "Meghdad",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
