@@ -1,16 +1,16 @@
 <img src="./public/mindmap.jpg" width="300"/>
 
-# 思维导图Vue2组件 ![npm](https://img.shields.io/npm/v/@hellowuxin/mindmap) ![npm](https://img.shields.io/npm/dm/@hellowuxin/mindmap)
+# Mind map Vue2 component ![npm](https://img.shields.io/npm/v/@hellowuxin/mindmap) ![npm](https://img.shields.io/npm/dm/@hellowuxin/mindmap)
 
-> 一个由[MindNode](https://mindnode.com)启发的思维导图Vue组件，基于d3.js实现  
-> 目前实现的功能有基本的编辑、拖移、缩放、撤销、上下文菜单、折叠...
+> A mind map Vue component inspired by [MindNode](https://mindnode.com), based on d3.js  
+> The currently implemented functions include basic editing, dragging, zooming, undoing, context menu, folding...
 
-## 近期更新
+## recent update
 
-> 该项目基本不会再维护  
-> 目前正在开发Vue3、d3v6版本的[思维导图组件](https://github.com/hellowuxin/vue3-mindmap)，欢迎支持
+> The project will basically no longer be maintained  
+> Currently developing Vue3, d3v6 version [mind map component] (https://github.com/hellowuxin/vue3-mindmap), welcome to support
 
-## 安装
+## Install
 
 ```sh
 npm install @hellowuxin/mindmap
@@ -20,28 +20,28 @@ npm install @hellowuxin/mindmap
 
 | Name        | Type   | Default   | Description          |
 | ---         | ---    | ---       | ---                  |
-| v-model     | Array  | undefined | 设置思维导图数据        |
-| width       | Number | 100%      | 设置组件宽度           |
-| height      | Number | undefined | 设置组件高度           |
-| xSpacing    | Number | 80        | 设置节点横向间隔        |
-| ySpacing    | Number | 20        | 设置节点纵向间隔        |
-| strokeWidth | Number | 4         | 设置连线的宽度          |
-| draggable   | Boolean| true      | 设置节点是否可拖拽      |
-| gps         | Boolean| true      | 是否显示居中按钮        |
-| fitView     | Boolean| true      | 是否显示缩放按钮        |
-| showNodeAdd | Boolean| true      | 是否显示添加节点按钮     |
-| keyboard    | Boolean| true      | 是否响应键盘事件        |
-| contextMenu | Boolean| true      | 是否响应右键菜单        |
-| zoomable    | Boolean| true      | 是否可缩放、拖移        |
-| showUndo    | Boolean| true      | 是否显示撤销重做按钮     |
-| download    | Boolean| true      | 是否显示下载按钮        |
+| v-model     | Array  | undefined | Set mind map data        |
+| width       | Number | 100%      | Set component width           |
+| height      | Number | undefined | Set component height           |
+| xSpacing    | Number | 80        | Set the horizontal interval of nodes        |
+| ySpacing    | Number | 20        | Set the vertical interval of nodes        |
+| strokeWidth | Number | 4         | Set the width of the line          |
+| draggable   | Boolean| true      | Set whether the node can be dragged      |
+| gps         | Boolean| true      | Whether to display the center button        |
+| fitView     | Boolean| true      | Whether to show the zoom button        |
+| showNodeAdd | Boolean| true      | Whether to display the add node button     |
+| keyboard    | Boolean| true      | Whether to respond to keyboard events        |
+| contextMenu | Boolean| true      | Whether to respond to the right-click menu        |
+| zoomable    | Boolean| true      | Can zoom and drag        |
+| showUndo    | Boolean| true      | Whether to display the undo redo button     |
+| download    | Boolean| true      | Whether to display the download button        |
 
 ## EVENTS
 
 | Name           | arguments | Description                    |
 | ---            | ---       | ---                            |
-| updateNodeName | data, id  | 更新节点名称时，传入节点数据和节点id |
-| click          | data, id  | 点击节点时，传入节点数据和节点id    |
+| updateNodeName | data, id  | When updating the node name, pass in the node data and node id |
+| click          | data, id  | When a node is clicked, the node data and node id are passed in    |
 
 ## Example
 
@@ -57,10 +57,10 @@ export default {
   components: { mindmap },
   data: () => ({
     data: [{
-      "name":"如何学习D3",
+      "name":"How to learn D3",
       "children": [
         {
-          "name":"预备知识",
+          "name":"Preliminary knowledge",
           "children": [
             { "name":"HTML & CSS" },
             { "name":"JavaScript" },
@@ -68,13 +68,13 @@ export default {
           ]
         },
         {
-          "name":"安装",
+          "name":"Install",
           "_children": [
-            { "name": "折叠节点" }
+            { "name": "collapse node" }
           ]
         },
         {
-          "name":"进阶",
+          "name":"Advanced",
           "left": true
         },
         ...
@@ -85,19 +85,19 @@ export default {
 </script>
 ```
 
-## 键盘事件
+## Keyboard Events
 
 <kbd>⇥ tab</kbd>、<kbd>⏎ enter</kbd>、<kbd>⌫ backspace</kbd>、<kbd>⌘ cmd</kbd>+<kbd>z</kbd>、<kbd>⌘ cmd</kbd>+<kbd>y</kbd>
 
-## 交互逻辑
+## Interactive Logic
 
-**鼠标**：space+左键移动、右键菜单、ctrl+滚轮缩放、左键选中
+**Mouse**：space + left Click to move, right click Menu, ctrl + scroll wheel to zoom, left click to Select
 
-**触控板**：双指滚动移动、双指菜单、双指捏合缩放、单指选中
+**Touchpad**：Two-finger scrolling, two-finger menu, two-finger pinch-to-zoom, one-finger selection
 
-## 待解决
+## to be solved
 
-- [ ] 导出多种格式
-- [ ] 设置节点的宽高
-- [ ] 多个根节点
+- [ ] Export to multiple formats
+- [ ] Set the width and height of the node
+- [ ] multiple root nodes
 - [ ] ...

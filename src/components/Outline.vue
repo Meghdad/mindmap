@@ -26,9 +26,9 @@ export default {
     emit(event, params) {
       this.$emit(event, params);
     },
-    updateNodeName() { // 文本编辑完成时
+    updateNodeName() { // When text editing is complete
       const editP = document.querySelector('#editing p');
-      window.getSelection().removeAllRanges();// 清除选中
+      window.getSelection().removeAllRanges();// clear check
       const editText = editP.textContent;
       d3.select('g#editing').each((d, i, n) => {
         n[i].removeAttribute('id');
@@ -49,26 +49,26 @@ export default {
         return `M${y0},${x0}V${x1 - 4}Q${y0} ${x1} ${y1} ${x1}`;
       }
       function clicked() {
-        d3.event.stopPropagation();// 阻止捕获和冒泡阶段中当前事件的进一步传播。
+        d3.event.stopPropagation();// Prevents further propagation of the current event in the capturing and bubbling phases.
         let sele = document.getElementById('selectedOutnode');
         const edit = document.getElementById('editing');
         const clickedNode = this;
-        if (clickedNode.isSameNode(edit)) { // 正在编辑
+        if (clickedNode.isSameNode(edit)) { // editing
           return;
         }
-        if (clickedNode.isSameNode(sele)) { // 进入编辑状态
+        if (clickedNode.isSameNode(sele)) { // enter edit state
           sele.setAttribute('id', 'editing');
           d3.select(sele).select('p').attr('contenteditable', true);
           document.querySelector('#editing p').focus();
           document.execCommand('selectAll', false);
-        } else { // 选中
-          // 选中新的selectedOutnode
+        } else { // selected
+          // Select the new selectedOutnode
           if (sele) {
             sele.removeAttribute('id');
           }
           sele = d3.select(clickedNode);
           sele.attr('id', 'selectedOutnode');
-          // 选中新的selectedMindnode
+          // Select the new selectedMindnode
           sele.each((d) => {
             const seleMind = d3.select('g#selectedMindnode');
             if (seleMind.nodes()[0]) {
@@ -94,7 +94,7 @@ export default {
         const foreignP = foreign.append('xhtml:p')
           .attr('contenteditable', false)
           .text((d) => d.data.name);
-        // 编辑完成时
+        // when editing is complete
         foreignP.on('blur', updateNodeName);
       }
       function updateNode(update) {
@@ -110,7 +110,7 @@ export default {
       }
       function draw(r) {
         let index = 0;
-        r.eachBefore((n) => { // 深度优先遍历
+        r.eachBefore((n) => { // Depth-first traversal
           n.x = index * (nodeSize.height + 1);
           n.y = n.depth * 8;
           index += 1;

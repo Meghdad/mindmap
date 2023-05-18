@@ -1,7 +1,7 @@
 function deepTraverse(d: Array<Data>, m: string, md: string, flag: string) {
   for (let index = 0; index < d?.length; index += 1) {
     const dChild = d[index]
-    if (m.length > 3 && m[0] === '#') { // #### 替换成 -
+    if (m.length > 3 && m[0] === '#') { // #### replace with -
       md += `- ${dChild.name}\n`
       if (dChild.children) {
         md = deepTraverse(dChild.children, '  -', md, '  ')

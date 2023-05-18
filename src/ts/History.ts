@@ -12,12 +12,12 @@ class History {
   get canClear() { return this.snapshots.length >= 0 }
   get canRedo() { return this.snapshots.length > this.cursor + 1 }
 
-  record(snapshot: Mdata) { // 记录数据快照
-    while (this.cursor < this.snapshots.length - 1) { // 去除旧分支
+  record(snapshot: Mdata) { // record data snapshot
+    while (this.cursor < this.snapshots.length - 1) { // remove old branch
       this.snapshots.pop()
     }
     this.snapshots.push(snapshot)
-    // 确保历史记录条数限制
+    // Ensuring that the number of history records is limited
     if (this.snapshots.length > this.maxSnapshots) { this.snapshots.shift() }
     this.cursor = this.snapshots.length - 1
   }

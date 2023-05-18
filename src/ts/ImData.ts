@@ -1,12 +1,12 @@
 import * as d3ScaleChromatic from 'd3-scale-chromatic'
 import * as d3Scale from 'd3-scale'
 
-const colorScale = d3Scale.scaleOrdinal(d3ScaleChromatic.schemePaired) // 颜色列表
+const colorScale = d3Scale.scaleOrdinal(d3ScaleChromatic.schemePaired) // color list
 let colorNumber = 0
-let size: Function // 生成size的函数
+let size: Function // function to generate size
 let gKey = 0
 
-function initColor(d: Mdata, c?: string) { // 初始化颜色
+function initColor(d: Mdata, c?: string) { // Initialize color
   let color
   if (d.id !== '0') {
     color = c || colorScale(`${colorNumber += 1}`)
@@ -25,7 +25,7 @@ function initColor(d: Mdata, c?: string) { // 初始化颜色
   }
 }
 
-function initSize(d: Mdata) { // 初始化size
+function initSize(d: Mdata) { // Initialize size
   d.size = size(d.name, d.id === '0')
   const { children, _children } = d
   if (children) {
@@ -40,7 +40,7 @@ function initSize(d: Mdata) { // 初始化size
   }
 }
 
-function _getSource(d: Mdata) { // 返回源数据
+function _getSource(d: Mdata) { // return source data
   const { children, _children } = d
   const nd: Data = { name: d.name }
   nd.left = d.left
@@ -61,7 +61,7 @@ function _getSource(d: Mdata) { // 返回源数据
   return nd
 }
 
-function initId(d: Mdata, id = '0') { // 初始化唯一标识：待优化
+function initId(d: Mdata, id = '0') { // Initialize the unique identifier: to be optimized
   d.id = id
   d.gKey = d.gKey || (gKey += 1)
   const { children, _children } = d
@@ -135,14 +135,14 @@ class ImData {
     return d ? _getSource(d) : { name: '' }
   }
 
-  resize(id = '0') { // 更新size
+  resize(id = '0') { // update size
     const d = this.find(id)
     if (d) {
       initSize(d)
     }
   }
 
-  find(id: string) { // 根据id找到数据
+  find(id: string) { // Find data by id
     const array = id.split('-').map(n => ~~n)
     let data = this.data
     for (let i = 1; i < array.length; i++) {
@@ -155,7 +155,7 @@ class ImData {
     return data
   }
 
-  rename(id: string, name: string) { // 修改名称
+  rename(id: string, name: string) { // modify name
     if (id.length > 0) {
       const d = this.find(id)
       if (d) {
@@ -166,7 +166,7 @@ class ImData {
     }
   }
 
-  collapse(id: string | string[]) { // 折叠
+  collapse(id: string | string[]) { // fold
     const arr = Array.isArray(id) ? id : [id]
     for (let i = 0; i < arr.length; i++) {
       const idChild = arr[i]
@@ -178,7 +178,7 @@ class ImData {
     }
   }
 
-  expand(id: string | string[]) { // 展开
+  expand(id: string | string[]) { // expand
     const arr = Array.isArray(id) ? id : [id]
     for (let i = 0; i < arr.length; i++) {
       const idChild = arr[i]
@@ -190,20 +190,20 @@ class ImData {
     }
   }
 
-  del(id: string | string[]) { // 删除指定id的数据
+  del(id: string | string[]) { // Delete the data of the specified id
     const arr = Array.isArray(id) ? id : [id]
     let p
     for (let i = 0; i < arr.length; i++) {
       const idChild = arr[i]
       const idArr = idChild.split('-')
-      if (idArr.length >= 2) { // 有parent
+      if (idArr.length >= 2) { // have parents
         const delIndex = idArr.pop()
         const parent = this.find(idArr.join('-'))
         if (delIndex && parent) {
           if (parent.children) {
-            parent.children[~~delIndex].id = 'del' // 更新id时删除
+            parent.children[~~delIndex].id = 'del' // Delete when updating id
           }
-          if (p === undefined || (p.id.split('-').length > parent.id.split('-').length)) { // 找出最高的parent
+          if (p === undefined || (p.id.split('-').length > parent.id.split('-').length)) { // find the highest parent
             p = parent
           }
         }
@@ -214,11 +214,11 @@ class ImData {
     }
   }
 
-  add(id: string, child: Data) { // 添加新的子节点
+  add(id: string, child: Data) { // add new child node
     if (id.length > 0) {
       const parent = this.find(id)
       if (parent) {
-        if ((parent._children?.length || 0) > 0) { // 判断是否折叠，如果折叠，展开
+        if ((parent._children?.length || 0) > 0) { // Determine whether to fold, if folded, expand
           parent.children = parent._children
           parent._children = []
         }
@@ -233,7 +233,7 @@ class ImData {
     }
   }
 
-  insert(id: string, d: Data, i = 0) { // 插入新的节点在前（或在后）
+  insert(id: string, d: Data, i = 0) { // insert new node before (or after)
     if (id.length > 2) {
       const idArr = id.split('-')
       const bId = idArr.pop()
@@ -254,9 +254,9 @@ class ImData {
     }
   }
 
-  move(delId: string, insertId?: string, i = 0) { // 节点在同层移动
+  move(delId: string, insertId?: string, i = 0) { // Nodes move on the same level
     if (delId.length > 2) {
-      if (!insertId) { // 左右转换
+      if (!insertId) { // switch left and right
         const del = this.find(delId)
         if (del) {
           initLeft(del, !del.left)
@@ -272,12 +272,12 @@ class ImData {
         if (delIndexS && insertIndexS && insert && parent && parent.children) {
           const delIndex = ~~delIndexS
           let insertIndex = ~~insertIndexS
-          // 删除时可能会改变插入的序号
+          // The sequence number of insertion may be changed when deleting
           if (delIndex < insertIndex) {
             insertIndex -= 1
           }
           const del = parent.children.splice(delIndex, 1)[0]
-          if (del.left !== insert.left) { // 左右转换
+          if (del.left !== insert.left) { // switch left and right
             initLeft(del, insert.left)
           }
           parent.children.splice(insertIndex + i, 0, del)
@@ -287,7 +287,7 @@ class ImData {
     }
   }
 
-  reparent(parentId: string, delId: string) { // 节点移动到其他层
+  reparent(parentId: string, delId: string) { // Nodes move to other layers
     if (delId.length > 2 && parentId.length > 0 && parentId !== delId) {
       const np = this.find(parentId)
       const idArr = delId.split('-')
@@ -295,7 +295,7 @@ class ImData {
       const delParentId = idArr.join('-')
       const delParent = this.find(delParentId)
       if (delIndex && delParent && np) {
-        const del = delParent.children?.splice(~~delIndex, 1)[0] // 删除
+        const del = delParent.children?.splice(~~delIndex, 1)[0] // delete
         if (del) {
           (np.children?.length || 0) > 0 ? np.children?.push(del)
             : ((np._children?.length || 0) > 0 ? np._children?.push(del) : np.children = [del])
